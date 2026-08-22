@@ -65,7 +65,6 @@ def idf(counts : list[list[int]]) -> list[int]:
         for j in range(ndocs):
             if(counts[j][i]>0):
                 idfarr[i] += 1
-                break
     for i in range(nvocab):
         if idfarr[i]:
             idfarr[i] = math.log10(ndocs/idfarr[i])
@@ -104,7 +103,8 @@ if __name__ == "__main__":
     filecontents = []
     #tokens of all documents
     tokens = []
-    for f in glob("./corpus/*"):
+    files = glob("./corpus/*")
+    for f in files:
         fcontent = readFile(f)
         tokens.append(tokenize(fcontent))
         filecontents.append(fcontent)
@@ -125,4 +125,6 @@ if __name__ == "__main__":
     tfarr = tfidf(tfarr, idfarr)
     query = input("Please enter your query: ")
     ranked = search(query, vocab, idfarr, tfarr)
+    for i,j in ranked:
+        print(f"File {files[i]}, Score {j}")
     print(ranked)
