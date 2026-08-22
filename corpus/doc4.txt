@@ -1,0 +1,1 @@
+Dynamic programming solves problems by breaking them into overlapping subproblems

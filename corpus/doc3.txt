@@ -1,0 +1,1 @@
+Merge sort divides the array into halves and recursively sorts each half
