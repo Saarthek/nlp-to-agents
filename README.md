@@ -32,31 +32,32 @@ pip install numpy scikit-learn
 
 1. Run basic TF-IDF (Pure Python):
 
-'''bash
+```bash
 python tfidf.py
-'''
+```
 
 2. Run NumPy vectorized TF-IDF:
 
-'''bash
+```bash
 python np_tfidf.py
-'''
+```
 
 3. Run scikit-learn benchmark:
 
-'''bash
+```bash
 python sklearntfidf.py
-'''
+```
 
 4. Verify outputs across approaches:
 
-'''bash
+```bash
 python merge_tfidf.py
-'''
+```
 
 ---
 
 ## Roadmap
+
 [x] Basic NLP Fundamentals (TF-IDF, Tokenization)
 
 [ ] Word Embeddings & Vector Stores (Word2Vec, Cosine Similarity)
