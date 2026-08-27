@@ -29,7 +29,7 @@ def buildVocab(docs:list[list[str]]) -> list[str]:
     vocab = set()
     for doc in docs:
         vocab.update(doc)
-    return list(vocab)
+    return sorted(list(vocab))
 
 
 def returnTrigramCounts(corpus: list[list[str]], voc2int) -> tuple[list[list[list[int]]], list[list[int]]]:
