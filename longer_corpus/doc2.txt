@@ -1,0 +1,1 @@
+Binary search finds a target value in a sorted array using divide and conquer. The algorithm repeatedly halves the search space by comparing the target to the middle element. It runs in logarithmic time as long as the array stays sorted.
