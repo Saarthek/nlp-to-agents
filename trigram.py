@@ -32,7 +32,7 @@ def buildVocab(docs:list[list[str]]) -> list[str]:
     return sorted(list(vocab))
 
 
-def returnTrigramCounts(corpus: list[list[str]], voc2int) -> tuple[list[list[list[int]]], list[list[int]]]:
+def returnTrigramCounts(corpus: list[list[str]], voc2int: dict[str, int]) -> tuple[list[list[list[int]]], list[list[int]]]:
     nvocab = len(voc2int)
     #counts = [[0]*nvocab]*nvocab -> same list reference for each row
     counts = [[[0]*nvocab for i in range(nvocab)] for j in range(nvocab)]
@@ -41,9 +41,8 @@ def returnTrigramCounts(corpus: list[list[str]], voc2int) -> tuple[list[list[lis
         for word1, word2, word3 in zip(text, text[1:], text[2:]):
             counts[voc2int[word1]][voc2int[word2]][voc2int[word3]] += 1
         for word1, word2 in zip(text, text[1:]):
-            bigrCounts[voc2int[word1]][voc2int[word2]] += 1
-            
-    return counts, bigrCounts
+            bigrCounts[voc2int[word1]][voc2int[word2]] += 1 
+    return (counts, bigrCounts)
 
 
 def laplaceSmoothing(trigramCounts : list[list[list[int]]], bigramCounts: list[list[int]], voc2int: dict[str, int]) -> list[list[list[float]]]:
@@ -83,9 +82,15 @@ if __name__ == "__main__":
         tokens.append(tokenize(fcontent))
     ndocs = len(tokens)
     vocab = buildVocab(tokens)
+    nvocab = len(vocab)
     voc2int = {word:idx for idx,word in enumerate(vocab)}
     trigramCounts, bigramCounts = returnTrigramCounts(tokens, voc2int)
     smoothed = laplaceSmoothing(trigramCounts, bigramCounts, voc2int)
+    print(f"Smoothened versions")
+    for i in range(nvocab):
+            for j in range(nvocab):
+                for k in range(nvocab):
+                    print(f"{vocab[i]} - {vocab[j]} - {vocab[k]} - {smoothed[i][j][k]}")
     ans = generate(smoothed, voc2int, vocab)
     ans = ' '.join(ans)
     print(ans)
