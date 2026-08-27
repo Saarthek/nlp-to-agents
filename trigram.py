@@ -46,7 +46,7 @@ def returnTrigramCounts(corpus: list[list[str]], voc2int) -> tuple[list[list[lis
     return counts, bigrCounts
 
 
-def laplaceSmoothing(trigramCounts, bigramCounts, voc2int):
+def laplaceSmoothing(trigramCounts : list[list[list[int]]], bigramCounts: list[list[int]], voc2int: dict[str, int]) -> list[list[list[float]]]:
     nvocab = len(voc2int)
     start_idx = voc2int['<s>']
     ans = [[[0.0]*nvocab for _ in range(nvocab)] for _ in range(nvocab)]
@@ -59,13 +59,13 @@ def laplaceSmoothing(trigramCounts, bigramCounts, voc2int):
                     ans[i][j][k] = (trigramCounts[i][j][k] + 1) / (bigramCounts[i][j] + nvocab - 1)
     return ans
 
-def sampleNext(word1, word2, smoothed, voc2int, vocab):
+def sampleNext(word1: str, word2: str, smoothed: list[list[list[float]]], voc2int: dict[str, int], vocab: list[str]) -> str:
     i, j = voc2int[word1], voc2int[word2]
     probs = smoothed[i][j]
     idx = random.choices(range(len(probs)), weights=probs, k=1)[0]
     return vocab[idx]
 
-def generate(smoothed, voc2int, vocab, max_len=20):
+def generate(smoothed: list[list[list[float]]], voc2int: dict[str, int], vocab: list[str], max_len: int=20) -> list[str]:
     words = ['<s>', '<s>']
     for _ in range(max_len):
         next_word = sampleNext(words[-2], words[-1], smoothed, voc2int, vocab)
